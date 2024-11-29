@@ -1,9 +1,9 @@
 const express = require('express');
-const { addRecommendation, getRecommendations } = require('../controllers/recommendationController');
-
+const recommendationController = require('../controllers/recommendationController');
 const router = express.Router();
 
-router.post('/', addRecommendation);
-router.get('/', getRecommendations);
+router.post('/', recommendationController.saveRecommendation);
+
+router.get('/:locationId', recommendationController.getRecommendationByLocationId);
 
 module.exports = router;
