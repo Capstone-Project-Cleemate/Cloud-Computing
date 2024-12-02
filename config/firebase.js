@@ -1,18 +1,11 @@
-require('dotenv').config();
-const { Firestore } = require('@google-cloud/firestore');
+// config/firestore.js
+const admin = require('firebase-admin');
+const dotenv = require('dotenv');
 
-const firestore = new Firestore({
-  projectId: process.env.PROJECT_ID,
-  keyFilename: process.env.KEY_FILENAME,
+dotenv.config();
+
+admin.initializeApp({
+    credential: admin.credential.cert(require(process.env.KEY_FILENAME)),
 });
 
-firestore.listCollections().then(collections => {
-    console.log("Koneksi ke Firestore berhasil. Koleksi yang tersedia:");
-    collections.forEach(collection => {
-        console.log(`- ${collection.id}`);
-    });
-}).catch(error => {
-    console.error("Terjadi kesalahan saat menghubungkan ke Firestore:", error);
-});
-
-module.exports = firestore;
+module.exports = admin;

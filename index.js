@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const recommendationRoutes = require('./routes/recommendationRoutes');
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 const port = process.env.PORT || 3000; 
@@ -14,6 +15,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/cuaca', recommendationRoutes);
+app.use('/api/auth', authRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
