@@ -9,16 +9,12 @@ const { Storage } = require('@google-cloud/storage');
 const bucketName = process.env.BUCKET_NAME; 
 
 const files = [
-    { name: 'kecamatanforecast-aceh.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-aceh.csv' },
-    { name: 'kecamatanforecast-bali.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-bali.csv' },
-    { name: 'kecamatanforecast-babel.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-babel.csv' },
-    { name: 'kecamatanforecast-banten.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-banten.csv' },
-    { name: 'kecamatanforecast-bengkulu.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-bengkulu.csv' },
-    { name: 'kecamatanforecast-jogyakarta.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-jogyakarta.csv' },
     { name: 'kecamatanforecast-jakarta.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-jakarta.csv' },
-    { name: 'kecamatanforecast-gorontalo.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-gorontalo.csv' },
     { name: 'kecamatanforecast-jambi.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-jambi.csv' },
     { name: 'kecamatanforecast-jawabarat.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-jawabarat.csv' },
+    { name: 'kecamatanforecast-jawatimur.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-jawatimur.csv' },
+    { name: 'kecamatanforecast-jawatengah.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-jawatengah.csv' },
+    { name: 'kecamatanforecast-sumut.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-sumut.csv' },
 ];
 
 const storage = new Storage();
