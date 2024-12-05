@@ -58,16 +58,11 @@ exports.getWeatherByLocationId = async (req, res) => {
     const locationId = req.params.locationId;
 
     const files = [
-        'kecamatanforecast-aceh.csv',
-        'kecamatanforecast-bali.csv',
-        'kecamatanforecast-babel.csv',
-        'kecamatanforecast-banten.csv',
-        'kecamatanforecast-bengkulu.csv',
-        'kecamatanforecast-jogyakarta.csv',
         'kecamatanforecast-jakarta.csv',
-        'kecamatanforecast-gorontalo.csv',
         'kecamatanforecast-jambi.csv',
-        'kecamatanforecast-jawabarat.csv',
+        'kecamatanforecast-sumut.csv',
+        'kecamatanforecast-jawatimur.csv',
+        'kecamatanforecast-jawatengah.csv',
     ];
 
     try {
