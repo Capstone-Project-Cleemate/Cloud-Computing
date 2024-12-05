@@ -17,6 +17,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api', recommendationRoutes);
+app.use('/api', authRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
