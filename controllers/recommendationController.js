@@ -162,7 +162,7 @@ exports.getWeatherByLocationId = async (req, res) => {
                 "Kecepatan Angin (km/jam)": row[10],
             }));
 
-            const prediction = await predictExtremeFluctuation(weatherData);
+            // const prediction = await predictExtremeFluctuation(weatherData);
 
             return res.json(formattedData);
         } else {
