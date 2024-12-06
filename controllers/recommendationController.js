@@ -1,3 +1,4 @@
+const { predictExtremeFluctuation } = require('./predictionController');
 const fs = require('fs');
 const path = require('path');
 const { Storage } = require('@google-cloud/storage');
@@ -160,6 +161,8 @@ exports.getWeatherByLocationId = async (req, res) => {
                 "Arah Angin": windDirectionCodes[row[9]] || "Tidak Diketahui", 
                 "Kecepatan Angin (km/jam)": row[10],
             }));
+
+            const prediction = await predictExtremeFluctuation(weatherData);
 
             return res.json(formattedData);
         } else {
