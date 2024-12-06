@@ -2,7 +2,6 @@
 const { initializeApp } = require('firebase/app');
 const { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } = require('firebase/auth');
 
-// Konfigurasi Firebase
 const firebaseConfig = {
     apiKey: process.env.API_KEY,
     authDomain: process.env.AUTH_DOMAIN,
@@ -12,34 +11,47 @@ const firebaseConfig = {
     appId: process.env.APP_ID
 };
 
-// Inisialisasi Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Fungsi untuk Registrasi Pengguna
 exports.register = async (req, res) => {
-    const { email, password } = req.body;
+    const { name, email, password } = req.body;
+
+    if (!name || !email || !password || password.length < 8) {
+        return res.status(400).json({ error: true, message: "Invalid input" });
+    }
 
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        res.status(201).json({ message: 'Pengguna berhasil terdaftar', user: userCredential.user });
+        res.status(201).json({ error: false, message: 'User  Created', userId: userCredential.user.uid });
     } catch (error) {
         console.error('Error registering user:', error);
-        res.status(400).json({ message: error.message });
+        res.status(400).json({ error: true, message: error.message });
     }
 };
 
-// Fungsi untuk Login Pengguna
 exports.login = async (req, res) => {
     const { email, password } = req.body;
+
+    if (!email || !password) {
+        return res.status(400).json({ error: true, message: "Invalid input" });
+    }
 
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
         const token = await user.getIdToken();
-        res.json({ token, message: "Login berhasil." });
+        res.json({
+            error: false,
+            message: "success",
+            loginResult: {
+                userId: user.uid,
+                name: user.displayName || "User ", 
+                token: token
+            }
+        });
     } catch (error) {
         console.error('Error logging in:', error);
-        res.status(401).json({ message: error.message });
+        res.status(401).json({ error: true, message: error.message });
     }
 };
