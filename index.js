@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const recommendationRoutes = require('./routes/recommendationRoutes');
 const authRoutes = require('./routes/authRoutes');
-require('./config/dataUpdater');
+// require('./config/dataUpdater');
 
 const app = express();
 const port = process.env.PORT || 3000; 
