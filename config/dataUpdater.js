@@ -9,11 +9,39 @@ const { Storage } = require('@google-cloud/storage');
 const bucketName = process.env.BUCKET_NAME; 
 
 const files = [
+    { name: 'kecamatanforecast-aceh.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-aceh.csv' },
+    { name: 'kecamatanforecast-bali.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-bali.csv' },
+    { name: 'kecamatanforecast-babel.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-babel.csv' },
+    { name: 'kecamatanforecast-banten.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-banten.csv' },
+    { name: 'kecamatanforecast-bengkulu.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-bengkulu.csv' },
+    { name: 'kecamatanforecast-jogyakarta.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-jogyakarta.csv' },
     { name: 'kecamatanforecast-jakarta.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-jakarta.csv' },
+    { name: 'kecamatanforecast-gorontalo.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-gorontalo.csv' },
     { name: 'kecamatanforecast-jambi.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-jambi.csv' },
     { name: 'kecamatanforecast-jawabarat.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-jawabarat.csv' },
-    { name: 'kecamatanforecast-jawatimur.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-jawatimur.csv' },
     { name: 'kecamatanforecast-jawatengah.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-jawatengah.csv' },
+    { name: 'kecamatanforecast-jawatimur.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-jawatimur.csv' },
+    { name: 'kecamatanforecast-kalbar.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-kalbar.csv' },
+    { name: 'kecamatanforecast-kalsel.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-kalsel.csv' },
+    { name: 'kecamatanforecast-kalteng.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-kalteng.csv' },
+    { name: 'kecamatanforecast-kaltim.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-kaltim.csv' },
+    { name: 'kecamatanforecast-kaluta.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-kaluta.csv' },
+    { name: 'kecamatanforecast-kepriau.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-kepriau.csv' },
+    { name: 'kecamatanforecast-lampung.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-lampung.csv' },
+    { name: 'kecamatanforecast-maluku.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-maluku.csv' },
+    { name: 'kecamatanforecast-malut.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-malut.csv' },
+    { name: 'kecamatanforecast-ntb.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-ntb.csv' },
+    { name: 'kecamatanforecast-ntt .csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-ntt.csv' },
+    { name: 'kecamatanforecast-papua.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-papua.csv' },
+    { name: 'kecamatanforecast-papuabarat.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-papuabarat.csv' },
+    { name: 'kecamatanforecast-riau.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-riau.csv' },
+    { name: 'kecamatanforecast-sulbar.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-sulbar.csv' },
+    { name: 'kecamatanforecast-sulsel.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-sulsel.csv' },
+    { name: 'kecamatanforecast-sulteng.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-sulteng.csv' },
+    { name: 'kecamatanforecast-sultenggara.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-sultenggara.csv' },
+    { name: 'kecamatanforecast-sulut.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-sulut.csv' },
+    { name: 'kecamatanforecast-sumbar.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-sumbar.csv' },
+    { name: 'kecamatanforecast-sumsel.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-sumsel.csv' },
     { name: 'kecamatanforecast-sumut.csv', url: 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/CSV/kecamatanforecast-sumut.csv' },
 ];
 
@@ -61,9 +89,9 @@ async function updateData() {
     }
 }
 
-// Update CSV setiap 10 hari sekali
+// Update CSV setiap 3 hari sekali
 const cron = require('node-cron');
-cron.schedule('0 0 */10 * *', () => {
+cron.schedule('0 0 */3 * *', () => {
     console.log('Menjalankan pembaruan data...');
     updateData().catch(console.error);
 });
