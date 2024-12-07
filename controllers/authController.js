@@ -1,6 +1,6 @@
-// controllers/authController.js
 const { initializeApp } = require('firebase/app');
 const { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } = require('firebase/auth');
+const { getFirestore, doc, setDoc, getDoc } = require('firebase/firestore');
 
 const firebaseConfig = {
     apiKey: process.env.API_KEY,
@@ -13,6 +13,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 exports.register = async (req, res) => {
     const { name, email, password } = req.body;
@@ -23,7 +24,15 @@ exports.register = async (req, res) => {
 
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        res.status(201).json({ error: false, message: 'User  Created', userId: userCredential.user.uid });
+        const userId = userCredential.user.uid;
+
+        await setDoc(doc(db, 'users', userId), {
+            name: name,
+            email: email,
+            createdAt: new Date()
+        });
+
+        res.status(201).json({ error: false, message: 'User  Created' });
     } catch (error) {
         console.error('Error registering user:', error);
         res.status(400).json({ error: true, message: error.message });
@@ -41,12 +50,16 @@ exports.login = async (req, res) => {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
         const token = await user.getIdToken();
+
+        const userDoc = await getDoc(doc(db, 'users', user.uid));
+        const userData = userDoc.exists() ? userDoc.data() : {};
+
         res.json({
             error: false,
             message: "success",
             loginResult: {
                 userId: user.uid,
-                name: user.displayName || "User ", 
+                name: userData.name || "User ",
                 token: token
             }
         });

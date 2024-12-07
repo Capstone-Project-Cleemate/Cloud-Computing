@@ -1,4 +1,4 @@
-const { predictExtremeFluctuation } = require('./predictionController');
+// const { predictExtremeFluctuation } = require('./predictionController');
 const fs = require('fs');
 const path = require('path');
 const { Storage } = require('@google-cloud/storage');
@@ -33,8 +33,8 @@ const loadGeofeatures = async () => {
                 })
                 .on('end', () => {
                     geofeatures = results;
-                    console.log("Total geofeatures loaded:", Object.keys(geofeatures).length);
-                    console.log("Geofeatures:", geofeatures); 
+                    // console.log("Total geofeatures loaded:", Object.keys(geofeatures).length);
+                    // console.log("Geofeatures:", geofeatures); 
                     resolve();
                 })
                 .on('error', (error) => {
@@ -60,7 +60,7 @@ exports.getWeatherByLocationName = async (req, res) => {
         return res.status(404).json({ message: "Lokasi tidak ditemukan." });
     }
 
-    console.log("Found location ID:", locationId);
+    // console.log("Found location ID:", locationId);
 
     return this.getWeatherByLocationId({ params: { locationId } }, res);
 };
@@ -80,7 +80,7 @@ exports.getWeatherByCoordinates = async (req, res) => {
         return res.status(404).json({ message: "Lokasi tidak ditemukan." });
     }
 
-    console.log("Found location ID:", locationId);
+    // console.log("Found location ID:", locationId);
 
     return this.getWeatherByLocationId({ params: { locationId } }, res);
 };
