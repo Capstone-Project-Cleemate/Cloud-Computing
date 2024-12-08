@@ -1,14 +1,71 @@
-// const { predictExtremeFluctuation } = require('./predictionController');
 const fs = require('fs');
 const path = require('path');
 const { Storage } = require('@google-cloud/storage');
 const csv = require('csv-parser');
 const https = require('https');
+const tf = require('@tensorflow/tfjs-node');
 
 const storage = new Storage();
 const bucketName = process.env.BUCKET_NAME;
 
 let geofeatures = {};
+
+let model;
+
+const loadModel = async () => {
+    model = await tf.loadLayersModel('https://storage.googleapis.com/cleemate-bucket/model.json');
+};
+
+loadModel().then(() => {
+    console.log("Model loaded successfully");
+}).catch(err => {
+    console.error("Error loading model:", err);
+});
+
+exports.predictExtremeFluctuation = async (req, res) => {
+    const {
+        humidity, temperature, wind_speed, temp_change, wind_speed_change, humidity_change,
+        temp_previous_day, wind_speed_previous_day, humidity_previous_day,
+        rolling_temp, rolling_wind, rolling_humidity, weather_code
+    } = req.body;
+
+    if (!humidity || !temperature || !wind_speed || !temp_change || !wind_speed_change || !humidity_change ||
+        !temp_previous_day || !wind_speed_previous_day || !humidity_previous_day ||
+        !rolling_temp || !rolling_wind || !rolling_humidity || !weather_code) {
+        return res.status(400).json({ message: "Data tidak lengkap." });
+    }
+
+    const inputFeatures = [
+        humidity, temperature, wind_speed, temp_change, wind_speed_change, humidity_change,
+        temp_previous_day, wind_speed_previous_day, humidity_previous_day,
+        rolling_temp, rolling_wind, rolling_humidity, ...weather_code
+    ];
+    
+    const expectedFeatures = 22; 
+    if (inputFeatures.length !== expectedFeatures) {
+        return res.status(400).json({
+            message: `Jumlah fitur input tidak sesuai. Diharapkan ${expectedFeatures} fitur, tetapi mendapatkan ${inputFeatures.length}.`
+        });
+    }
+
+    try {
+        const inputData = tf.tensor2d([inputFeatures]);
+
+        const prediction = model.predict(inputData);
+        const predictedValue = prediction.dataSync()[0]; 
+
+        const resultMessage = predictedValue > 0.5 ? 
+            "Terdapat fluktuasi ekstrem." : 
+            "Tidak terdapat fluktuasi ekstrem.";
+
+        return res.json({ hasil: resultMessage });
+    } catch (error) {
+        console.error("Error during prediction:", error);
+        return res.status(500).json({ message: "Terjadi kesalahan saat melakukan prediksi." });
+    }
+};
+
+
 
 const loadGeofeatures = async () => {
     return new Promise((resolve, reject) => {
@@ -195,8 +252,6 @@ exports.getWeatherByLocationId = async (req, res) => {
                 "Arah Angin": windDirectionCodes[row[9]] || "Tidak Diketahui", 
                 "Kecepatan Angin (km/jam)": row[10],
             }));
-
-            // const prediction = await predictExtremeFluctuation(weatherData);
 
             return res.json(formattedData);
         } else {
