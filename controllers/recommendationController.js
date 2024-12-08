@@ -29,9 +29,9 @@ exports.predictExtremeFluctuation = async (req, res) => {
         rolling_temp, rolling_wind, rolling_humidity, weather_code
     } = req.body;
 
-    if (!humidity || !temperature || !wind_speed || !temp_change || !wind_speed_change || !humidity_change ||
-        !temp_previous_day || !wind_speed_previous_day || !humidity_previous_day ||
-        !rolling_temp || !rolling_wind || !rolling_humidity || !weather_code) {
+    if ([humidity, temperature, wind_speed, temp_change, wind_speed_change, humidity_change,
+        temp_previous_day, wind_speed_previous_day, humidity_previous_day,
+        rolling_temp, rolling_wind, rolling_humidity, weather_code].some(value => value === null || value === undefined)) {
         return res.status(400).json({ message: "Data tidak lengkap." });
     }
 
@@ -54,9 +54,13 @@ exports.predictExtremeFluctuation = async (req, res) => {
         const prediction = model.predict(inputData);
         const predictedValue = prediction.dataSync()[0]; 
 
-        const resultMessage = predictedValue > 0.5 ? 
-            "Terdapat fluktuasi ekstrem." : 
-            "Tidak terdapat fluktuasi ekstrem.";
+        const resultMessage = (
+            Math.abs(temp_change) > 5 || 
+            Math.abs(wind_speed_change) > 10 || 
+            Math.abs(humidity_change) > 10 ||
+            predictedValue < 0.2
+        ) ? "Terdapat fluktuasi ekstrem." : "Tidak terdapat fluktuasi ekstrem.";
+        
 
         return res.json({ hasil: resultMessage });
     } catch (error) {
@@ -64,8 +68,6 @@ exports.predictExtremeFluctuation = async (req, res) => {
         return res.status(500).json({ message: "Terjadi kesalahan saat melakukan prediksi." });
     }
 };
-
-
 
 const loadGeofeatures = async () => {
     return new Promise((resolve, reject) => {
