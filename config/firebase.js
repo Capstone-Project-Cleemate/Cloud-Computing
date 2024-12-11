@@ -1,5 +1,5 @@
 const admin = require('firebase-admin');
-const serviceAccount = require('../cleemate.json'); // Path ke file Service Account Key
+// const serviceAccount = require('../cleemate.json'); 
 
 // Local Pakai Ini
 // Ambil Service Account Key dari console google cleemate
