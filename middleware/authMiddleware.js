@@ -1,14 +1,14 @@
 
 const admin = require('firebase-admin');
-const serviceAccount = require('../cleemate.json'); 
-
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
-});
+// const serviceAccount = require('../cleemate.json'); 
 
 // admin.initializeApp({
-//     credential: admin.credential.applicationDefault() 
+//     credential: admin.credential.cert(serviceAccount)
 // });
+
+admin.initializeApp({
+    credential: admin.credential.applicationDefault() 
+});
 
 exports.authenticate = async (req, res, next) => {
     const token = req.headers.authorization?.split(' ')[1];
