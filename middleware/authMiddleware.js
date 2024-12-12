@@ -1,10 +1,5 @@
 
 const admin = require('firebase-admin');
-// const serviceAccount = require('../cleemate.json'); 
-
-// admin.initializeApp({
-//     credential: admin.credential.cert(serviceAccount)
-// });
 
 admin.initializeApp({
     credential: admin.credential.applicationDefault() 
@@ -19,7 +14,7 @@ exports.authenticate = async (req, res, next) => {
 
     try {
         const user = await admin.auth().verifyIdToken(token);
-        req.user = user; // Save user information in the request
+        req.user = user; 
         next();
     } catch (error) {
         console.error('Error verifying token:', error);
