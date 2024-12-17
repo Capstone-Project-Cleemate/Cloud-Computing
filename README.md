@@ -1,13 +1,13 @@
-#Back End API Cloud Computing Role
+# Back End API Cloud Computing Role
 
-##Login
+## Login
 https://cloud-computing-740074572546.asia-southeast2.run.app/api/Login
 
-##Register
+## Register
 https://cloud-computing-740074572546.asia-southeast2.run.app/api/register
 
-##Health
+## Health
 https://cloud-computing-740074572546.asia-southeast2.run.app/health
 
-##Weather and Prediction
+## Weather and Prediction
 https://cloud-computing-740074572546.asia-southeast2.run.app/weather/:latitude/:longitude
